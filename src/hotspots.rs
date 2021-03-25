@@ -58,6 +58,30 @@ pub async fn get(client: &Client, address: &str) -> Result<Hotspot> {
         .await
 }
 
+/// Get sum of hotspot earnings over a period of time
+use chrono::{DateTime, Utc, Duration};
+pub async fn get_rewards(client: &Client, address: &str, duration: Duration) -> Result<Hnt> {
+
+    let max_time: DateTime<Utc> = Utc::now();
+    let min_time= max_time - duration;
+    #[derive(Clone, Serialize, Deserialize, Debug)]
+    struct Response {
+        #[serde(deserialize_with = "Hnt::deserialize")]
+        sum: Hnt,
+    }
+
+    let query = [
+        ["max_time".to_string(), format!("{:?}", max_time)],
+        ["min_time".to_string(), format!("{:?}", min_time)],
+    ];
+
+    let response: Response = client
+        .fetch(&format!("/hotspots/{}/rewards/sum", address), &query)
+        .await?;
+
+    Ok(response.sum)
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
@@ -90,4 +114,15 @@ mod test {
             "112vvSrNAwJRSmR54aqFLEhbr6cy6T4Ufuja4VWVrxvkUAUxL2yG"
         );
     }
+
+    #[test]
+    async fn get_rewards() {
+        let client = Client::default();
+        let hotspot = hotspots::get_rewards(
+            &client,
+            "11x3mn28zLLRzGNtViVKcaVPDwJT9awFSKfDaGhnoAVXYxzmkf",
+            Duration::days(1))
+            .await.expect("get earnings");
+    }
 }
+
