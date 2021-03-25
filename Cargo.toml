@@ -8,6 +8,10 @@ description = "An async library for the Helium blockchain REST API"
 authors = ["Marc Nijdam <marc@helium.com>"]
 edition = "2018"
 
+[features]
+default= []
+transactions=["helium-proto"]
+
 [dependencies]
 reqwest = {version = "0", default-features=false, features = ["gzip", "json", "rustls-tls"]}
 serde =  {version = "1", features=["derive"]}
@@ -18,6 +22,7 @@ thiserror = "1"
 futures = "0"
 async-trait = "0"
 chrono = "0.4"
+helium-proto = { git = "https://github.com/helium/proto", branch = "lthiery/rust-add-serde", features = ["json_serde"], optional = true  }
 
 [dev-dependencies]
 tokio = {version = "1", features = ["full"]}

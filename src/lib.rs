@@ -24,6 +24,8 @@ pub mod ouis;
 pub mod pending_transactions;
 pub mod validators;
 pub mod vars;
+#[cfg(feature = "transactions")]
+pub mod transactions;
 
 /// The default timeout for API requests
 pub const DEFAULT_TIMEOUT: u64 = 120;

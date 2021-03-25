@@ -118,7 +118,7 @@ mod test {
     #[test]
     async fn get_rewards() {
         let client = Client::default();
-        let hotspot = hotspots::get_rewards(
+        let _hotspot = hotspots::get_rewards(
             &client,
             "11x3mn28zLLRzGNtViVKcaVPDwJT9awFSKfDaGhnoAVXYxzmkf",
             Duration::days(1))

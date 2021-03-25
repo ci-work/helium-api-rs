@@ -52,6 +52,13 @@ pub fn validators(client: &Client, address: &str) -> Stream<validators::Validato
     client.fetch_stream(&format!("/accounts/{}/validators", address), NO_QUERY)
 }
 
+/// Get all the transactions for the account
+#[cfg(feature = "transactions")]
+pub fn transactions(client: &Client, address: &str) -> Stream<transactions::Transaction> {
+    client.fetch_stream(&format!("/accounts/{}/activity", address), NO_QUERY)
+
+}
+
 /// Get a list of of up to a limit (maximum 1000) accounts sorted by their balance in
 /// descending order
 pub async fn richest(client: &Client, limit: Option<u32>) -> Result<Vec<Account>> {
@@ -120,6 +127,22 @@ mod test {
         .await
         .expect("hotspot list");
         assert!(hotspots.len() > 0);
+    }
+
+    #[test]
+    #[cfg(feature = "transactions")]
+    async fn transactions() {
+        let client = Client::default();
+        let txns = accounts::transactions(
+            &client,
+            "13WRNw4fmssJBvMqMnREwe1eCvUVXfnWXSXGcWXyVvAnQUF3D9R",
+        )
+            .into_vec()
+            .await
+            .expect("hotspot list");
+
+        println!("{:?}", txns);
+        assert!(txns.len() > 0);
     }
 
     #[test]
