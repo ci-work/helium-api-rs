@@ -133,16 +133,11 @@ mod test {
     #[cfg(feature = "transactions")]
     async fn transactions() {
         let client = Client::default();
-        let txns = accounts::transactions(
+        let _txn = accounts::transactions(
             &client,
             "13WRNw4fmssJBvMqMnREwe1eCvUVXfnWXSXGcWXyVvAnQUF3D9R",
         )
-            .into_vec()
-            .await
-            .expect("hotspot list");
-
-        println!("{:?}", txns);
-        assert!(txns.len() > 0);
+            .next().await.expect("transactions").unwrap();
     }
 
     #[test]
@@ -150,7 +145,7 @@ mod test {
         let client = Client::default();
         let richest = accounts::richest(&client, Some(10))
             .await
-            .expect("richet list");
+            .expect("richest list");
         assert_eq!(richest.len(), 10);
     }
 }
