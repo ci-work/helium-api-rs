@@ -55,6 +55,25 @@ macro_rules! decimal_scalar {
             }
         }
 
+        impl From<isize> for $stype {
+            fn from(v: isize) -> Self {
+                if let Some(mut data) = Decimal::from_isize(v) {
+                    data.set_scale(8).unwrap();
+                    return Self(data);
+                }
+                panic!("isize could not be converted into Decimal")
+            }
+        }
+      impl From<i32> for $stype {
+            fn from(v: i32) -> Self {
+                if let Some(mut data) = Decimal::from_i32(v) {
+                    data.set_scale(8).unwrap();
+                    return Self(data);
+                }
+                panic!("i32 could not be converted into Decimal")
+            }
+        }
+
         impl From<$stype> for u64 {
             fn from(v: $stype) -> Self {
                 if let Some(scaled_dec) = v.0.checked_mul($scalar.into()) {
@@ -93,3 +112,5 @@ decimal_scalar!(Hnt, 100_000_000, 8);
 decimal_scalar!(Hst, 100_000_000, 8);
 decimal_scalar!(Usd, 100_000_000, 8);
 decimal_scalar!(Dbi, 10, 1);
+decimal_scalar!(Dc, 1);
+

@@ -56,7 +56,24 @@ pub fn validators(client: &Client, address: &str) -> Stream<validators::Validato
 #[cfg(feature = "transactions")]
 pub fn transactions(client: &Client, address: &str) -> Stream<transactions::Transaction> {
     client.fetch_stream(&format!("/accounts/{}/activity", address), NO_QUERY)
+}
 
+/// Get all the transactions for the account
+#[cfg(feature = "transactions")]
+pub fn rewards(client: &Client, address: &str) -> Stream<transactions::Transaction> {
+
+
+    #[derive(Clone, Serialize, Deserialize, Debug)]
+    struct Response {
+        #[serde(deserialize_with = "Hnt::deserialize")]
+        sum: Hnt,
+    }
+
+    let query = [
+        ["filter_types".to_string(), "rewards_v1,rewards_v2".to_string()],
+    ];
+
+    client.fetch_stream(&format!("/accounts/{}/activity", address), &query)
 }
 
 /// Get a list of of up to a limit (maximum 1000) accounts sorted by their balance in
