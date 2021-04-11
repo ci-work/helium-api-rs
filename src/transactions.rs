@@ -41,6 +41,7 @@ pub enum Data {
     SecurityExchangeV1(SecurityExchangeV1),
     VarsV1(VarsV1),
     RewardsV1(RewardsV1),
+    RewardsV2(RewardsV2),
     TokenBurnV1(TokenBurnV1),
     DcCoinbaseV1(DcCoinbaseV1),
     TokenBurnExchangeRateV1(TokenBurnExchangeRateV1),
@@ -70,6 +71,7 @@ default_data!(RoutingV1, BlockchainTxnRoutingV1);
 default_data!(SecurityExchangeV1, BlockchainTxnSecurityExchangeV1);
 default_data!(VarsV1, BlockchainTxnVarsV1);
 default_data!(RewardsV1, BlockchainTxnRewardsV1);
+default_data!(RewardsV2, BlockchainTxnRewardsV2);
 default_data!(TokenBurnV1, BlockchainTxnTokenBurnV1);
 default_data!(DcCoinbaseV1, BlockchainTxnDcCoinbaseV1);
 default_data!(
