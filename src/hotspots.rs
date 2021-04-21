@@ -59,8 +59,8 @@ pub async fn get(client: &Client, address: &str) -> Result<Hotspot> {
 }
 
 /// Get sum of hotspot earnings over a period of time
-use chrono::{DateTime, Utc, Duration};
-pub async fn get_rewards(client: &Client, address: &str, duration: Duration) -> Result<Hnt> {
+#[cfg(feature = "transactions")]
+pub async fn get_rewards(client: &Client, address: &str, duration: ChronoDuration) -> Result<Hnt> {
 
     let max_time: DateTime<Utc> = Utc::now();
     let min_time= max_time - duration;

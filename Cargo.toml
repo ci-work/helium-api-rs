@@ -8,6 +8,10 @@ description = "An async library for the Helium blockchain REST API"
 authors = ["Marc Nijdam <marc@helium.com>"]
 edition = "2018"
 
+[lib]
+name = "helium_api"
+source = "src/lib.rs"
+
 [features]
 default= []
 transactions=["helium-proto"]

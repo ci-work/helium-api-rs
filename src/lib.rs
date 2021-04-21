@@ -22,10 +22,14 @@ pub mod hotspots;
 pub mod oracle;
 pub mod ouis;
 pub mod pending_transactions;
+pub mod reward;
 pub mod validators;
 pub mod vars;
 #[cfg(feature = "transactions")]
 pub mod transactions;
+#[cfg(feature = "transactions")]
+use chrono::{DateTime, Utc, Duration as ChronoDuration};
+
 
 /// The default timeout for API requests
 pub const DEFAULT_TIMEOUT: u64 = 120;

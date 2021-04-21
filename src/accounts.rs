@@ -60,20 +60,44 @@ pub fn transactions(client: &Client, address: &str) -> Stream<transactions::Tran
 
 /// Get all the transactions for the account
 #[cfg(feature = "transactions")]
-pub fn rewards(client: &Client, address: &str) -> Stream<transactions::Transaction> {
-
-
-    #[derive(Clone, Serialize, Deserialize, Debug)]
-    struct Response {
-        #[serde(deserialize_with = "Hnt::deserialize")]
-        sum: Hnt,
-    }
-
+pub fn get_rewards_last(client: &Client, address: &str, duration: ChronoDuration) -> Stream<reward::Reward> {
+    let max_time: DateTime<Utc> = Utc::now();
+    let min_time= max_time - duration;
     let query = [
-        ["filter_types".to_string(), "rewards_v1,rewards_v2".to_string()],
+        ["max_time".to_string(), format!("{:?}", max_time)],
+        ["min_time".to_string(), format!("{:?}", min_time)],
     ];
 
-    client.fetch_stream(&format!("/accounts/{}/activity", address), &query)
+    client
+        .fetch_stream(&format!("/accounts/{}/rewards", address), &query)
+
+}
+
+/// Get all the transactions for the account
+#[cfg(feature = "transactions")]
+pub fn get_rewards_since(client: &Client, address: &str, min_time: DateTime<Utc>) -> Stream<reward::Reward> {
+    let max_time: DateTime<Utc> = Utc::now();
+    let query = [
+        ["max_time".to_string(), format!("{:?}", max_time)],
+        ["min_time".to_string(), format!("{:?}", min_time)],
+    ];
+
+    client
+        .fetch_stream(&format!("/accounts/{}/rewards", address), &query)
+
+}
+
+/// Get all the transactions for the account
+#[cfg(feature = "transactions")]
+pub fn get_rewards_between(client: &Client, address: &str, min_time: DateTime<Utc>, max_time: DateTime<Utc>) -> Stream<reward::Reward> {
+    let query = [
+        ["max_time".to_string(), format!("{:?}", max_time)],
+        ["min_time".to_string(), format!("{:?}", min_time)],
+    ];
+
+    client
+        .fetch_stream(&format!("/accounts/{}/rewards", address), &query)
+
 }
 
 /// Get a list of of up to a limit (maximum 1000) accounts sorted by their balance in
