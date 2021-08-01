@@ -82,6 +82,12 @@ pub async fn get_rewards(client: &Client, address: &str, duration: ChronoDuratio
     Ok(response.sum)
 }
 
+/// Get all the transactions for the account
+#[cfg(feature = "transactions")]
+pub fn activity(client: &Client, address: &str) -> Stream<transactions::Transaction> {
+    client.fetch_stream(&format!("/hotspots/{}/activity", address), NO_QUERY)
+}
+
 #[cfg(test)]
 mod test {
     use super::*;

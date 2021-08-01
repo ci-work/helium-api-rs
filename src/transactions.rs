@@ -27,6 +27,7 @@ macro_rules! default_data {
 pub enum Data {
     AddGatewayV1(AddGatewayV1),
     AssertLocationV1(AssertLocationV1),
+    AssertLocationV2(AssertLocationV2),
     CoinbaseV1(CoinbaseV1),
     CreateHtlcV1(CreateHtlcV1),
     GenGatewayV1(GenGatewayV1),
@@ -57,6 +58,7 @@ pub enum Data {
 
 default_data!(AddGatewayV1, BlockchainTxnAddGatewayV1);
 default_data!(AssertLocationV1, BlockchainTxnAssertLocationV1);
+default_data!(AssertLocationV2, BlockchainTxnAssertLocationV2);
 default_data!(CoinbaseV1, BlockchainTxnCoinbaseV1);
 default_data!(CreateHtlcV1, BlockchainTxnCreateHtlcV1);
 default_data!(GenGatewayV1, BlockchainTxnGenGatewayV1);
