@@ -88,6 +88,7 @@ pub fn activity(client: &Client, address: &str) -> Stream<transactions::Transact
     client.fetch_stream(&format!("/hotspots/{}/activity", address), NO_QUERY)
 }
 
+
 #[cfg(test)]
 mod test {
     use super::*;

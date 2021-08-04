@@ -180,6 +180,13 @@ pub trait IntoVec {
 }
 
 #[async_trait]
+pub trait IntoVecSinceBlock {
+    type Item;
+
+    async fn into_vec_since_block(mut self, block: usize) -> Result<Vec<Self::Item>>;
+}
+
+#[async_trait]
 impl<T> IntoVec for Stream<T>
 where
     T: std::marker::Send,
@@ -190,5 +197,23 @@ where
             .await
             .into_iter()
             .collect()
+    }
+}
+
+#[async_trait]
+impl IntoVecSinceBlock for Stream<transactions::Transaction>
+{
+    type Item = transactions::Transaction;
+    async fn into_vec_since_block(mut self, block: usize) -> Result<Vec<Self::Item>> {
+        let mut vec = Vec::new();
+        while let Some(Ok(result)) = self.next().await {
+            if result.height > block {
+                vec.push(result);
+            } else {
+                return Ok(vec);
+            }
+        }
+        Ok(vec)
+
     }
 }
