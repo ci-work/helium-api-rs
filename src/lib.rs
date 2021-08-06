@@ -101,9 +101,9 @@ impl Client {
     }
 
     pub(crate) fn fetch_stream<E, Q>(&self, path: &str, query: &Q) -> Stream<E>
-    where
-        E: 'static + DeserializeOwned + std::marker::Send,
-        Q: Serialize + ?Sized,
+        where
+            E: 'static + DeserializeOwned + std::marker::Send,
+            Q: Serialize + ?Sized,
     {
         let path = path.to_string();
         let client = self.clone();
@@ -200,6 +200,7 @@ where
     }
 }
 
+#[cfg(feature = "transactions")]
 #[async_trait]
 impl IntoVecSinceBlock for Stream<transactions::Transaction>
 {

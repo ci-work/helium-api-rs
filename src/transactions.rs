@@ -55,6 +55,7 @@ pub enum Data {
     BundleV1(BundleV1),
     TransferHotspotV1(TransferHotspotV1),
     ValidatorHeartbeatV1(ValidatorHeartbeatV1),
+    StakeValidatorV1(StakeValidatorV1)
 }
 
 default_data!(AddGatewayV1, BlockchainTxnAddGatewayV1);
@@ -90,6 +91,7 @@ default_data!(GenPriceOracleV1, BlockchainTxnGenPriceOracleV1);
 default_data!(BundleV1, BlockchainTxnBundleV1);
 default_data!(TransferHotspotV1, BlockchainTxnTransferHotspotV1);
 default_data!(ValidatorHeartbeatV1, BlockchainTxnValidatorHeartbeatV1);
+default_data!(StakeValidatorV1, BlockchainTxnStakeValidatorV1);
 
 // Use the JSON Serializiation for debug printing
 use std::fmt;
