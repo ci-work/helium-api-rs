@@ -1,5 +1,7 @@
 use crate::{
-    models::{transactions::TransactionRecord, Account, Hotspot, Oui, QueryTimeRange, Validator},
+    models::{
+        transactions::ProcessedTransaction, Account, Hotspot, Oui, QueryTimeRange, Validator,
+    },
     *,
 };
 
@@ -47,7 +49,7 @@ pub fn activity(
     client: &Client,
     address: &str,
     query: &QueryTimeRange,
-) -> Stream<TransactionRecord> {
+) -> Stream<ProcessedTransaction> {
     client.fetch_stream(&format!("/accounts/{}/activity", address), query)
 }
 
