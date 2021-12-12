@@ -29,7 +29,7 @@ pub mod vars;
 /// The default timeout for API requests
 pub const DEFAULT_TIMEOUT: u64 = 120;
 /// The default base URL if none is specified.
-pub const DEFAULT_BASE_URL: &str = "https://api.helium.io/v1";
+pub const DEFAULT_BASE_URL: &str = "https://api.cfidev.org/v1";
 /// A utility constant to pass an empty query slice to the various client fetch
 /// functions
 pub const NO_QUERY: &[&str; 0] = &[""; 0];
